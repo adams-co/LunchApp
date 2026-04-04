@@ -2,7 +2,7 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import HostelList from "@/components/HostelList";
 import { useHostels } from "@/hooks/useHostels";
-import { Link } from "react-router-dom";
+
 const Index = () => {
   const [search, setSearch] = useState("");
   const { data: hostels = [], isLoading } = useHostels();
@@ -114,7 +114,7 @@ const recentHostels = [...filtered].reverse().slice(0, 4);
 
 
 
-
+ <h2 className="text-lg font-bold mb-3"> Hostels</h2>
 
         {isLoading ? (
           <div className="text-center py-12 text-muted-foreground">Loading hostels...</div>
