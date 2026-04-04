@@ -7,7 +7,7 @@ const HostelDetail = () => {
 
   const handleWhatsAppShare = () => {
   const currentUrl = window.location.href;
-
+console.log(`curreny${currentUrl}`)
   const message = `🏠 ${hostel.name}
 💰 ${hostel.price}
 📍 ${hostel.location}
