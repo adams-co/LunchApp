@@ -10,7 +10,7 @@ export const useHostels = () => {
       const { data, error } = await supabase
         .from("hostels")
         .select("*");
-       console.log(`this is the eror:${data}`)
+       
       if (error) throw error;
       
       // Fall back to mock data if Supabase table is empty
