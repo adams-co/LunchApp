@@ -1,7 +1,7 @@
-import hostelHero from "@/assets/hostel-hero.jpg";
+/*import hostelHero from "@/assets/hostel-hero.jpg";
 import hostelRoom from "@/assets/hostel-room-1.jpg";
 import hostel2 from "@/assets/hostel-2.jpg";
-import hostel3 from "@/assets/hostel-3.jpg";
+import hostel3 from "@/assets/hostel-3.jpg";*/
 
 export interface Hostel {
   id: string;
@@ -20,7 +20,7 @@ export const hostels: Hostel[] = [
     id: "1",
     name: "Ocean Breeze Hostel",
     video: "https://www.w3schools.com/html/mov_bbb.mp4",
-    images: [hostelHero, hostelRoom, hostel2, hostel3],
+    images: [],
     location: "Science Junction, Cape Coast",
     phone: "+233241234567",
     price: "GH₵ 3,500 / year",
@@ -31,7 +31,7 @@ export const hostels: Hostel[] = [
     id: "2",
     name: "Palm View Lodge",
     video: "https://www.w3schools.com/html/mov_bbb.mp4",
-    images: [hostel2, hostelHero, hostelRoom, hostel3],
+    images: [],
     location: "OLA, Cape Coast",
     phone: "+233201234567",
     price: "GH₵ 2,800 / year",
@@ -42,7 +42,7 @@ export const hostels: Hostel[] = [
     id: "3",
     name: "Campus Heights",
     video: "https://www.w3schools.com/html/mov_bbb.mp4",
-    images: [hostel3, hostel2, hostelRoom, hostelHero],
+    images: [],
     location: "Apewosika, Cape Coast",
     phone: "+233551234567",
     price: "GH₵ 4,200 / year",
@@ -53,7 +53,7 @@ export const hostels: Hostel[] = [
     id: "4",
     name: "Sunrise Apartments",
     video: "https://www.w3schools.com/html/mov_bbb.mp4",
-    images: [hostelRoom, hostel3, hostelHero, hostel2],
+    images: [],
     location: "Kwaprow, Cape Coast",
     phone: "+233271234567",
     price: "GH₵ 3,000 / year",

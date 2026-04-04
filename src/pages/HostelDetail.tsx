@@ -1,12 +1,66 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, MapPin, Phone, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { useHostel } from "@/hooks/useHostels";
 
 const HostelDetail = () => {
+
+  const handleWhatsAppShare = () => {
+  const currentUrl = window.location.href;
+
+  const message = `🏠 ${hostel.name}
+💰 ${hostel.price}
+📍 ${hostel.location}
+
+Check it out: ${currentUrl}`;
+
+  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+
+  window.open(whatsappUrl, "_blank");
+};
+
+
+
+
+
+
+
   const { id } = useParams<{ id: string }>();
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+
+  const [isSaved, setIsSaved] = useState(false);
+
+
   const { data: hostel, isLoading } = useHostel(id);
+
+  useEffect(() => {
+  if (!hostel) return;
+
+  const saved = JSON.parse(localStorage.getItem("savedHostels") || "[]");
+  setIsSaved(saved.includes(hostel.id));
+}, [hostel]);
+
+const toggleSave = () => {
+  const saved = JSON.parse(localStorage.getItem("savedHostels") || "[]");
+
+  let updated;
+
+  if (saved.includes(hostel.id)) {
+    updated = saved.filter((id) => id !== hostel.id);
+    setIsSaved(false);
+  } else {
+    updated = [...saved, hostel.id];
+    setIsSaved(true);
+  }
+
+  localStorage.setItem("savedHostels", JSON.stringify(updated));
+};
+
+
+
+
+
 console.log("Fetched hostel:", hostel);
   if (isLoading) {
     return (
@@ -35,14 +89,41 @@ console.log("Fetched hostel:", hostel);
   
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container px-4 sm:px-6 py-3 flex items-center gap-3">
-          <Link to="/" className="text-foreground hover:text-primary transition-colors p-1 -ml-1">
-            <ArrowLeft className="w-5 h-5" />
-          </Link>
-          <h1 className="font-heading font-semibold text-foreground text-sm sm:text-base truncate">
-            {hostel.name}
-          </h1>
-        </div>
+        
+          
+          <div className="container px-4 sm:px-6 py-3 flex items-center justify-between">
+  
+  {/* Left side */}
+  <div className="flex items-center gap-3">
+    <Link to="/" className="text-foreground hover:text-primary transition-colors p-1 -ml-1">
+      <ArrowLeft className="w-5 h-5" />
+    </Link>
+
+    <h1 className="font-heading font-semibold text-foreground text-sm sm:text-base truncate">
+      {hostel.name}
+    </h1>
+  </div>
+
+  {/* Right side */}
+  <Link
+    to="/saved"
+    className="text-sm font-medium text-muted-foreground hover:text-primary"
+  >
+    ❤️ Saved
+  </Link>
+
+</div>
+
+
+
+
+          
+          
+          
+          
+          
+          
+          
       </header>
 
       <main className="pb-28">
@@ -71,7 +152,22 @@ console.log("Fetched hostel:", hostel);
 
         <div className="container px-4 sm:px-6 space-y-4 sm:space-y-5 pt-2">
           <div>
-            <h2 className="font-heading font-bold text-lg sm:text-xl md:text-2xl text-foreground">{hostel.name}</h2>
+
+
+            <div className="flex items-center justify-between">
+  <h2 className="font-heading font-bold text-lg sm:text-xl md:text-2xl text-foreground">
+    {hostel.name}
+  </h2>
+
+  <button onClick={toggleSave} className="text-2xl">
+    {isSaved ? "❤️" : "🤍"}
+  </button>
+</div>
+
+
+
+
+
             <p className="text-primary font-heading font-semibold text-base sm:text-lg mt-1">{hostel.price}</p>
           </div>
 
@@ -97,14 +193,27 @@ console.log("Fetched hostel:", hostel);
       </main>
 
       <div className="fixed bottom-0 left-0 right-0 p-3 sm:p-4 bg-background/90 backdrop-blur-md border-t border-border safe-bottom">
-        <a
-          href={`tel:${hostel.phone}`}
-          className="flex items-center justify-center gap-2 w-full max-w-lg mx-auto gradient-primary text-primary-foreground font-heading font-bold text-sm sm:text-base py-3.5 sm:py-4 rounded-xl shadow-glow transition-transform active:scale-[0.98]"
-        >
-          <Phone className="w-5 h-5" />
-          Call Manager
-        </a>
-      </div>
+  <div className="flex gap-3 max-w-lg mx-auto">
+
+    {/* Call Button */}
+    <a
+      href={`tel:${hostel.phone}`}
+      className="flex items-center justify-center gap-2 w-1/2 gradient-primary text-primary-foreground font-heading font-bold text-sm sm:text-base py-3.5 sm:py-4 rounded-xl shadow-glow transition-transform active:scale-[0.98]"
+    >
+      <Phone className="w-5 h-5" />
+      Call
+    </a>
+
+    {/* WhatsApp Share Button */}
+    <button
+      onClick={handleWhatsAppShare}
+      className="flex items-center justify-center gap-2 w-1/2 bg-green-500 text-white font-heading font-bold text-sm sm:text-base py-3.5 sm:py-4 rounded-xl shadow-glow transition-transform active:scale-[0.98]"
+    >
+      📲 Share
+    </button>
+
+  </div>
+</div>
 
       {lightboxIndex !== null && hostel.images && (
         <div className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center" onClick={() => setLightboxIndex(null)}>

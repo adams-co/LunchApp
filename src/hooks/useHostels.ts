@@ -15,7 +15,7 @@ export const useHostels = () => {
       
       // Fall back to mock data if Supabase table is empty
       if (!data || data.length === 0) return mockHostels;
-      console.log(`data is ${data}`)
+      
       return data as Hostel[];
       
     },
