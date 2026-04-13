@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useHostels } from "@/hooks/useHostels";
 import HostelList from "@/components/HostelList";
+import { useHostelEngagement } from "@/hooks/useHostelEngagement";
+import AppFrame from "@/components/AppFrame";
 const SavedHostels = () => {
-  const savedIds = JSON.parse(localStorage.getItem("savedHostels") || "[]");
-
   const { data: hostels, isLoading } = useHostels();
+  const { savedIds, getEngagement, getPopularityScore, toggleLike, toggleLove, toggleSaved, setReaction } =
+    useHostelEngagement();
 
   const savedHostels = hostels?.filter((hostel) =>
     savedIds.includes(hostel.id)
@@ -20,7 +22,7 @@ const SavedHostels = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <AppFrame>
 
       {/* Header */}
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
@@ -43,22 +45,23 @@ const SavedHostels = () => {
         {savedHostels?.length === 0 ? (
           <p>No saved hostels yet</p>
         ) : (
-          
-        
-        
-<div>
-  <h2 className="text-lg font-bold mb-3">Saved Hostels</h2>
-
-  <HostelList hostels={savedHostels} />
-</div>
-        
-
-        
-        
+          <div>
+            <h2 className="text-lg font-bold mb-3">Saved Hostels</h2>
+            <HostelList
+              hostels={savedHostels}
+              getEngagement={getEngagement}
+              getPopularityScore={getPopularityScore}
+              isSaved={(id) => savedIds.includes(id)}
+              onToggleSave={toggleSaved}
+              onToggleLike={toggleLike}
+              onToggleLove={toggleLove}
+              onSetReaction={setReaction}
+            />
+          </div>
         )}
 
       </div>
-    </div>
+    </AppFrame>
   );
 };
 

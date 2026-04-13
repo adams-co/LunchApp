@@ -7,6 +7,10 @@ import Index from "./pages/Index.tsx";
 import HostelDetail from "./pages/HostelDetail.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import SavedHostels from "./pages/SavedHostels";
+import Shorts from "./pages/Shorts";
+import Manage from "./pages/Manage";
+import Profile from "./pages/Profile";
+import Login from "./pages/Login";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -19,8 +23,12 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/hostel/:id" element={<HostelDetail />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/shorts" element={<Shorts />} />
+          <Route path="/manage" element={<Manage />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/saved" element={<SavedHostels />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
